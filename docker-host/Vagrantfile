@@ -1,0 +1,26 @@
+# Copied from https://github.com/mitchellh/vagrant/blob/master/plugins/providers/docker/hostmachine/Vagrantfile
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "mitchellh/boot2docker"
+
+  config.vm.provider "virtualbox" do |v|
+    # On VirtualBox, we don't have guest additions or a functional vboxsf
+    # in TinyCore Linux, so tell Vagrant that so it can be smarter.
+    v.check_guest_additions = false
+    v.functional_vboxsf     = false
+  end
+
+  # b2d doesn't support NFS
+  config.nfs.functional = false
+
+  config.vm.network "forwarded_port",
+    guest: 2020, host: 2020
+
+  config.vm.network "forwarded_port",
+    guest: 7070, host: 7070
+
+  config.vm.network "forwarded_port",
+    guest: 8080, host: 8080
+
+end

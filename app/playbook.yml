@@ -1,0 +1,14 @@
+---
+- hosts: db
+  sudo: yes
+  tasks:
+    - name: Install postgresql
+      apt: name={{item}} state=latest
+      with_items:
+        - postgresql 
+        - python-psycopg2
+    - name: Ensure postgresql is started
+      service: name=postgresql state=started
+    - name: Create postgresql DB
+      sudo_user: postgres
+      postgresql_db: name=app_db

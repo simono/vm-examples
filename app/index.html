@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Vagrant Docker Ansible</title>
+
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script>
+      jQuery(document).ready(function() {
+        jQuery.get('http://localhost:7070/', function(data) {
+          jQuery('#username').html(data);
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>Hello, <span id="username">unknown User</span>!</h1>
+    <form role="form" action="http://localhost:7070/" method="POST">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter Name">
+      <button type="submit" class="btn btn-default">Go</button>
+    </form>
+  </body>
+</html>

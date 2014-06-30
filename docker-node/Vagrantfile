@@ -1,0 +1,12 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.provider "docker" do |d|
+    d.image = "node"
+    d.cmd = ["node", "/vagrant/app.js"]
+    d.ports = ["8080:80"]
+    d.vagrant_vagrantfile = "../docker-host/Vagrantfile"
+  end
+end

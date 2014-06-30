@@ -1,0 +1,50 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile: Start
+Vagrant.configure("2") do |config|
+
+  config.vm.define "db" do |db|
+    db.vm.provider "docker" do |d|
+      d.name = "db"
+      d.cmd = ["/sbin/my_init", "--enable-insecure-key"]
+      d.image = "phusion/passenger-full"
+      d.expose = [5432]
+      d.ports = ["2020:22"]
+      d.has_ssh = true
+      d.vagrant_vagrantfile = "../docker-host/Vagrantfile"
+    end
+
+    db.ssh.username = "root"
+    db.ssh.private_key_path = "/Users/simon/Downloads/phusion.key"
+    db.ssh.host = "127.0.0.1"
+    db.ssh.port = 2020
+
+    db.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbook.yml"
+    end
+  end
+
+  config.vm.define "app" do |app|
+    app.vm.provider "docker" do |d|
+      d.name = "app"
+      d.image = "node"
+      d.cmd = ["node", "/vagrant/app.js"]
+      d.ports = ["7070:80"]
+      d.link("db:db")
+      d.vagrant_vagrantfile = "../docker-host/Vagrantfile"
+    end
+  end
+
+  config.vm.define "assets" do |assets|
+    assets.vm.provider "docker" do |d|
+      d.name = "assets"
+      d.image = "nginx"
+      d.ports = ["8080:80"]
+      d.vagrant_vagrantfile = "../docker-host/Vagrantfile"
+    end
+    assets.vm.synced_folder ".", "/usr/local/nginx/html",
+      :mount_options => ["ro"]
+  end
+end
+# Vagrantfile: End
