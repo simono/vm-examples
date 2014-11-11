@@ -2,7 +2,7 @@
 
 This Repository contains Virtual Machines for my Talk ["Virtuelle Umgebungen mit
 Vagrant, Docker und
-Ansible"](https://speakerdeck.com/simono/virtuelle-umgebungen-mit-vagrant-docker-und-ansible)
+Ansible"](https://speakerdeck.com/simono/virtuelle-umgebungen-mit-vagrant-docker-und-ansible-enterjs)
 (available in German only).
 
 ## Virtual Machines:
